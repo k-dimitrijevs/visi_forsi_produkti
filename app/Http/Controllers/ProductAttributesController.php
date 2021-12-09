@@ -6,16 +6,12 @@ use App\Http\Requests\AttributeRequest;
 use App\Models\Product;
 use App\Models\ProductAttributes;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProductAttributesController extends Controller
 {
     public function index(Product $product)
     {
-        $productAttributes = ProductAttributes::where('product_id', $product->id)
-            ->get();
-
+        $productAttributes = ProductAttributes::where('product_id', $product->id)->get();
 
         return view('products.viewAttr', [
             'productAttributes' => $productAttributes,
@@ -38,21 +34,6 @@ class ProductAttributesController extends Controller
         $attribute->save();
 
         return redirect()->route('viewAttr', ['product' => $product]);
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     public function destroy(string $attrId): RedirectResponse

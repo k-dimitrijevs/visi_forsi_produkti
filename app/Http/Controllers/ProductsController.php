@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsRequest;
 use App\Models\Product;
-use App\Models\ProductAttributes;
 use Illuminate\Http\RedirectResponse;
 
 class ProductsController extends Controller
@@ -50,6 +49,7 @@ class ProductsController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
+        $product->productAttributes()->delete();
         return redirect()->route('products.index');
     }
 }
