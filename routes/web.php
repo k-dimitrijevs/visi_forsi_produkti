@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductAttributesController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
 

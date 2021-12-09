@@ -33,23 +33,24 @@ class ProductsController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function show($id)
+    public function edit(Product $product)
     {
-        //
+        return view('products.edit', ['product' => $product]);
     }
 
-    public function edit($id)
+    public function update(ProductsRequest $request, Product $product): RedirectResponse
     {
-        //
+        $product->update([
+           'name' => $request->get('name'),
+           'description' => $request->get('description')
+        ]);
+
+        return redirect()->route('products.index');
     }
 
-    public function update(Request $request, $id)
+    public function destroy(Product $product): RedirectResponse
     {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }
