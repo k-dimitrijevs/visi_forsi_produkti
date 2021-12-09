@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AttributeRequest;
 use App\Models\Product;
 use App\Models\ProductAttributes;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,16 +19,25 @@ class ProductAttributesController extends Controller
 
         return view('products.viewAttr', [
             'productAttributes' => $productAttributes,
-            'productName' => $product->name,
+            'product' => $product,
         ]);
     }
 
-    public function create()
+    public function create(Product $product)
     {
+        return view('products.addAttr', ['product' => $product]);
     }
 
-    public function store(Request $request)
+    public function store(AttributeRequest $request, Product $product)
     {
+        $attribute = (new ProductAttributes([
+            'product_id' => $product->id,
+            'key' => $request->get('key'),
+            'value' => $request->get('value'),
+        ]));
+        $attribute->save();
+
+        return redirect()->route('viewAttr', ['product' => $product]);
     }
 
     public function show($id)
@@ -44,8 +55,10 @@ class ProductAttributesController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(string $attrId): RedirectResponse
     {
-        //
+        ProductAttributes::where('id', $attrId)->delete();
+
+        return redirect()->back();
     }
 }

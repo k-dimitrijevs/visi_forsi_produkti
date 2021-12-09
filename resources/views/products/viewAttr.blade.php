@@ -2,12 +2,15 @@
     <x-slot name="header">
         <div class="grid-cols-2 pb-6">
             <h2 class="float-left font-semibold text-xl text-gray-800 leading-tight">
-                {{ __($productName) }}
+                {{ __($product->name) }}
             </h2>
             <div class="float-right btn p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-blue-500 rounded">
-                <a href="{{ route('products.create') }}">
-                    Add Product
-                </a>
+                <form method="GET" action="{{ route('addAttr', $product) }}">
+                    @csrf
+                    <button type="submit">
+                            Add Attribute
+                    </button>
+                </form>
             </div>
         </div>
     </x-slot>
@@ -31,8 +34,7 @@
                                 <td class="px-6">{{ $attr->key }}</td>
                                 <td class="px-6">{{ $attr->value }}</td>
                                 <td>
-                                    <form method="POST" action="#">
-{{--                                        {{ route('deleteAttribute', $product) }}--}}
+                                    <form method="POST" action="{{ route('deleteAttr', $attr) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" onclick="return confirm('Are you sure to delete?')">

@@ -26,8 +26,20 @@ Route::get('/dashboard', function () {
 Route::resource('products', ProductsController::class)->middleware(['auth']);
 //Route::resource('productAttributes', ProductAttributesController::class)->middleware(['auth']);
 
-Route::get('/products/{product}/attributes', [ProductAttributesController::class, 'index'])
+Route::get('/products/{product}', [ProductAttributesController::class, 'index'])
     ->middleware(['auth'])
     ->name('viewAttr');
+
+Route::get('/products/{product}/newAttribute', [ProductAttributesController::class, 'create'])
+    ->middleware(['auth'])
+    ->name('addAttr');
+
+Route::post('/products/{product}/saveAttribute', [ProductAttributesController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('saveAttr');
+
+Route::delete('/products/{product}/delete', [ProductAttributesController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('deleteAttr');
 
 require __DIR__.'/auth.php';
