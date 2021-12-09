@@ -12,6 +12,7 @@ class ProductAttributes extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+//        'product_id',
         'key',
         'value'
     ];

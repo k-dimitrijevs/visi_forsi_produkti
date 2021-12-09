@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsRequest;
 use App\Models\Product;
+use App\Models\ProductAttributes;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-
     public function index()
     {
         $products = Product::all();

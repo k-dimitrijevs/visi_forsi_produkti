@@ -15,36 +15,55 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto">
             <div class="bg-white overflow-hidden shadow-sm">
-                <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-2">
-                    @foreach($products as $product)
-                        <div class="font-sans px-16 bg-white-darker w-full py-4 border-2 m-2">
-                            <div class="flex">
-                                <p class="font-bold pr-4">NAME:</p>
-                                <p>{{ $product->name }}</p>
-                            </div>
-                            <div class="flex">
-                                <p class="font-bold pr-4">DESCRIPTION:</p>
-                                <p>{{ $product->description }}</p>
-                            </div>
-                            <div class="flex py-2">
-                                <a href="{{ route('products.edit', $product) }}">
-                                    <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-yellow-500 rounded mr-1.5">
-                                        Edit Product
-                                    </div>
-                                </a>
-                                <form method="POST" action="{{ route('products.destroy', $product) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Are you sure to delete?')">
-                                        <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-red-500 rounded">
-                                            Delete Product
-                                        </div>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+                <div class="p-4 border-b border-gray-200">
+                    <table class="min-w-full">
+                        <thead class="bg-blue-200">
+                            <tr>
+                                <th scope="col" class="text-left px-6">Product Name</th>
+                                <th scope="col" class="text-left px-6">Description</th>
+                                <th scope="col" class="text-left px-6">Attribute</th>
+                                <th scope="col" class="text-left px-6">Edit</th>
+                                <th scope="col" class="text-left px-6">Delete</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="bg-white">
+                            @foreach($products as $product)
+                                <tr>
+                                    <td class="px-6">{{ $product->name }}</td>
+                                    <td class="px-6">{{ $product->description }}</td>
+                                    <td class="px-6">
+                                        <a href="{{ route('viewAttr', $product) }}">
+                                            <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-yellow-500 rounded mr-1.5">
+                                                See attributes
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="px-6">
+                                        <form method="GET" action="{{ route('products.edit', $product) }}">
+                                            @csrf
+                                            <button type="submit">
+                                                <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-yellow-400 rounded">
+                                                    Edit Product
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="POST" action="{{ route('products.destroy', $product) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Are you sure to delete?')">
+                                                <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 bg-red-500 rounded">
+                                                    Delete Product
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>

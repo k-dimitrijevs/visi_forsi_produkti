@@ -24,5 +24,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('products', ProductsController::class)->middleware(['auth']);
+//Route::resource('productAttributes', ProductAttributesController::class)->middleware(['auth']);
+
+Route::get('/products/{product}/attributes', [ProductAttributesController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('viewAttr');
 
 require __DIR__.'/auth.php';
