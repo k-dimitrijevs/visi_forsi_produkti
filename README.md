@@ -25,5 +25,6 @@ This is basic product catalog built in Laravel.
    - `DB_USERNAME` - Change to your username (default "root")
    - `DB_PASSWORD` - Insert your password for user
 7. Run `php artisan key:generate` command
-8. Run `php artisan migrate` command
-9. To run local server - `php artisan serve`
+8. Run `npm instal && npm run dev` command
+9. Run `php artisan migrate` command
+10. To run local server - `php artisan serve`
