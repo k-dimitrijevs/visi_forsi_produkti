@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsRequest;
 use App\Models\Product;
+use App\Repositories\ProductsRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 
 class ProductsController extends Controller
 {
+
+    private ProductsRepositoryInterface $productsRepository;
+
+    public function __construct(ProductsRepositoryInterface $productsRepository)
+    {
+        $this->productsRepository = $productsRepository;
+    }
+
     public function index()
     {
-        $products = Product::all();
-
-        return view('products.index', ['products' => $products]);
+        return view('products.index', ['products' => $this->productsRepository->getProducts()]);
     }
 
     public function create()
@@ -22,12 +29,7 @@ class ProductsController extends Controller
 
     public function store(ProductsRequest $request): RedirectResponse
     {
-        $product = (new Product([
-            'name' => $request->get('name'),
-            'description' => $request->get('description')
-        ]));
-        $product->save();
-
+        $this->productsRepository->saveProduct($request);
         return redirect()->route('products.index');
     }
 
@@ -38,18 +40,13 @@ class ProductsController extends Controller
 
     public function update(ProductsRequest $request, Product $product): RedirectResponse
     {
-        $product->update([
-           'name' => $request->get('name'),
-           'description' => $request->get('description')
-        ]);
-
+        $this->productsRepository->updateProduct($request, $product);
         return redirect()->route('products.index');
     }
 
     public function destroy(Product $product): RedirectResponse
     {
-        $product->delete();
-        $product->productAttributes()->delete();
+        $this->productsRepository->deleteProduct($product);
         return redirect()->route('products.index');
     }
 }
